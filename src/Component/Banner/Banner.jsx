@@ -5,7 +5,7 @@ const Banner = () => {
     <div className="carousel w-full">
       <div id="slide1" className="carousel-item relative w-full">
         <img
-          src="https://img.freepik.com/premium-photo/sunset-symphony-natures-final-overture-sunset-image-photography_1020697-52039.jpg"
+          src="https://wallpapers.com/images/featured/4k-painting-ze08s2umco2ikud6.jpg"
           className="w-full max-h-[500px] object-cover"
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -19,7 +19,7 @@ const Banner = () => {
       </div>
       <div id="slide2" className="carousel-item relative w-full">
         <img
-          src="https://img.freepik.com/premium-photo/illusion-dream-innovation-exploration-technology-sci-fi-physics-quantum-fluctuations-8k-octane-rendered-ultra-realistic-digital-art-banner-game-movie_620624-5721.jpg"
+          src="https://wallpapercat.com/w/full/f/8/b/2147689-3840x2160-desktop-4k-fantasy-art-background-photo.jpg"
           className="w-full max-h-[500px] object-cover"
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -33,7 +33,7 @@ const Banner = () => {
       </div>
       <div id="slide3" className="carousel-item relative w-full">
         <img
-          src="https://timelinecovers.pro/facebook-cover/download/new-york-graffiti-wall-art-facebook-cover.jpg"
+          src="https://free-3dtextureshd.com/wp-content/uploads/2024/05/270.jpg.webp"
           className="w-full max-h-[500px] object-cover"
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -47,7 +47,7 @@ const Banner = () => {
       </div>
       <div id="slide4" className="carousel-item relative w-full">
         <img
-          src="https://img.freepik.com/premium-photo/painting-depicting-path-winding-through-dense-forest_585982-10058.jpg"
+          src="https://images.wallpapersden.com/image/download/painting-sky-green-art_a2tlZmyUmZqaraWkpJRmbmdlrWZlbWU.jpg"
           className="w-full max-h-[500px] object-cover"
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
