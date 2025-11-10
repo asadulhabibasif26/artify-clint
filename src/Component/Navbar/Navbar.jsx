@@ -51,7 +51,7 @@ const Navbar = () => {
             }
           </ul>
         </div>
-        <Link to='/'><a className="btn btn-ghost text-xl">ARTIFY</a></Link>
+        <Link className="btn btn-ghost text-xl" to='/'> ARTIFY</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-2">
