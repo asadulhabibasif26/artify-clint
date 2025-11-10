@@ -1,23 +1,56 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user , signOutUser} = use(AuthContext);
+  const handelLogOut = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't to LogOut your self!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, LogOut!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "LogOut Successful!",
+          text: "Your has been LogOuted.",
+          icon: "success",
+        });
+        signOutUser()
+      }
+    });
+  };
   const link = (
     <>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to="/">Home</NavLink>
+        <NavLink className="btn btn-accent btn-outline" to="/">
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to="/artwork">Explore Artworks</NavLink>
+        <NavLink className="btn btn-accent btn-outline" to="/artwork">
+          Explore Artworks
+        </NavLink>
       </li>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to="/addArtwork">Add Artwork</NavLink>
+        <NavLink className="btn btn-accent btn-outline" to="/addArtwork">
+          Add Artwork
+        </NavLink>
       </li>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to="/gallery">My Gallery</NavLink>
+        <NavLink className="btn btn-accent btn-outline" to="/gallery">
+          My Gallery
+        </NavLink>
       </li>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to='/favorites' >My Favorites</NavLink>
+        <NavLink className="btn btn-accent btn-outline" to="/favorites">
+          My Favorites
+        </NavLink>
       </li>
     </>
   );
@@ -46,22 +79,27 @@ const Navbar = () => {
             tabIndex="-1"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            {
-                link
-            }
+            {link}
           </ul>
         </div>
-        <Link className="btn btn-ghost text-xl" to='/'> ARTIFY</Link>
+        <Link className="btn btn-ghost text-xl" to="/">
+          {" "}
+          ARTIFY
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-2">
-          {
-            link
-          }
-        </ul>
+        <ul className="menu menu-horizontal px-1 gap-2">{link}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-accent btn-outline">LogIn</a>
+        {user ? (
+          <button onClick={handelLogOut} className="btn btn-accent btn-outline">
+            LogOut
+          </button>
+        ) : (
+          <Link to="/login" className="btn btn-accent btn-outline">
+            <button>LogIn</button>
+          </Link>
+        )}
       </div>
     </div>
   );
