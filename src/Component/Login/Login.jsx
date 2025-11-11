@@ -1,10 +1,39 @@
-import React, { use } from "react";
-import { Link } from "react-router";
+import React, { use, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthContext";
 
 const Login = () => {
-  const { signInWithGoogle, setUser } = use(AuthContext);
+  const { signInWithGoogle, setUser, signInWithPassword } = use(AuthContext);
+  const navigate = useNavigate();
+
+  const handlePasswordLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signInWithPassword(email, password)
+      .then((result) => {
+        const newUser = {
+          name: result.user.displayName,
+          email: result.user.email,
+        };
+        setUser(newUser);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "LogIn Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire("Email or Password is working!");
+      });
+  };
 
   const handelGoogleSingIn = () => {
     signInWithGoogle()
@@ -22,6 +51,7 @@ const Login = () => {
           image: result.user.photoURL,
         };
         setUser(newUser);
+        navigate("/")
         fetch("http://localhost:3000/users", {
           method: "POST",
           headers: {
@@ -42,11 +72,21 @@ const Login = () => {
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto my-20">
       <div className="card-body">
         <h1 className="text-5xl text-accent font-bold">Login now!</h1>
-        <fieldset className="fieldset">
+        <form onSubmit={handlePasswordLogin} className="fieldset">
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input
+            name="email"
+            type="email"
+            className="input"
+            placeholder="Email"
+          />
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input
+            name="password"
+            type="password"
+            className="input"
+            placeholder="Password"
+          />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
@@ -56,8 +96,10 @@ const Login = () => {
               Register
             </Link>
           </h2>
-          <button className="btn btn-outline btn-accent mt-4">Login</button>
-        </fieldset>
+          <button type="submit" className="btn btn-outline btn-accent mt-4">
+            Login
+          </button>
+        </form>
       </div>
       <h1 className="font-bold text-center mb-3">OR</h1>
       <div>

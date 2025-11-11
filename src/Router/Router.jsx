@@ -4,6 +4,8 @@ import Home from "../Component/Home/Home";
 import Error from "../Component/Error/Error";
 import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
+import PrivateRoute from "../Component/PrivetRouter/PrivetRouter";
+import ArtDetails from "../Component/ArtDetails/ArtDetails";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
         {
           path: '/register',
           Component: Register
+        },
+        {
+          path: '/artDetails',
+          element: <PrivateRoute><ArtDetails></ArtDetails></PrivateRoute>
         }
     ],
   },

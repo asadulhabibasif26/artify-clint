@@ -1,4 +1,5 @@
 import React, { use } from "react";
+import { Link } from "react-router";
 
 const TopArt = ({ topArt }) => {
 
@@ -23,7 +24,7 @@ const TopArt = ({ topArt }) => {
             <h2 className=""><span className="font-bold text-accent">Artist:</span> {artist_name}</h2>
           </div>
           <div className="card-actions w-full">
-            <button className="btn btn-outline btn-accent w-full">View Details</button>
+            <Link className="w-full" to='/artDetails'><button className="btn btn-outline btn-accent w-full">View Details</button></Link>
           </div>
         </div>
       </div>

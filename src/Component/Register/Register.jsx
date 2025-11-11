@@ -1,10 +1,61 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
 
 const Register = () => {
-  const { signInWithGoogle, setUser } = use(AuthContext);
+  const { signInWithGoogle, setUser, singUpWithPassword } = use(AuthContext);
+  const navigate = useNavigate();
+  
+  const handleRegisterWithPassword = async (e) => {
+    e.preventDefault();
+        const form = e.target;
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const photoURL = e.target.photoURL.value;
+
+    try {
+      const result = await singUpWithPassword(email, password);
+
+      const newUser = {
+        name: name,
+        email: email,
+        image: photoURL,
+      };
+
+      setUser(newUser);
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "LogIn Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      form.reset();
+      navigate("/");
+      fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("after save data :", data);
+        });
+    } catch (error) {
+      console.error("Firebase Error:", error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Register Failed",
+        text: error.message,
+      });
+      setUser(null)
+    }
+  };
 
   const handelGoogleSingIn = () => {
     signInWithGoogle()
@@ -22,6 +73,7 @@ const Register = () => {
           image: result.user.photoURL,
         };
         setUser(newUser);
+        navigate("/");
         fetch("http://localhost:3000/users", {
           method: "POST",
           headers: {
@@ -43,18 +95,43 @@ const Register = () => {
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto my-20">
       <div className="card-body">
         <h1 className="text-5xl text-accent font-bold">Register now!</h1>
-        <fieldset className="fieldset">
+        <form onSubmit={handleRegisterWithPassword} className="fieldset">
+          {/* Name */}
+          <label className="label">Name</label>
+          <input name="name" type="text" className="input" placeholder="Name" />
+          {/* Photo URL */}
+          <label className="label">Photo URL</label>
+          <input
+            name="photoURL"
+            type="text"
+            className="input"
+            placeholder="Phot URL"
+          />
+          {/* Email */}
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input
+            name="email"
+            type="email"
+            className="input"
+            placeholder="Email"
+          />
+          {/* password */}
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input
+            name="password"
+            type="password"
+            className="input"
+            placeholder="Password"
+          />
           <h2>
             Already Have An Account ?{" "}
             <Link to="/login" className="text-bold text-accent text-[16px]">
               LogIn
             </Link>
           </h2>
-          <button className="btn btn-outline btn-accent mt-4">Register</button>
+          <button type="submit" className="btn btn-outline btn-accent mt-4">
+            Register
+          </button>
           <h1 className="text-center font-bold">OR</h1>
           <div>
             <button
@@ -91,7 +168,7 @@ const Register = () => {
               Login with Google
             </button>
           </div>
-        </fieldset>
+        </form>
       </div>
     </div>
   );
