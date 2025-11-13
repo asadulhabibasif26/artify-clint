@@ -1,9 +1,40 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const MyFavoriteCard = ({ fav, index }) => {
-  const { image, title, artId } = fav;
+  const { image, title, artId , _id} = fav;
+
+  console.log(_id)
+  const handelFavoriteDelete = (_id) => {
+    Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            fetch(`http://localhost:3000/favorites/${_id}`, {
+              method: "DELETE",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.deletedCount) {
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                  });
+                  window.location.reload()
+                }
+              });
+          }
+        });
+  }
   return (
     <div>
       <div>
@@ -25,7 +56,7 @@ const MyFavoriteCard = ({ fav, index }) => {
                 </button>
               </Link>
             </div>
-            <button className="text-xl text-red-600 btn btn-outline btn-accent">
+            <button onClick={()=> handelFavoriteDelete(_id)} className="text-xl text-red-600 btn btn-outline btn-accent">
               <MdDelete />
             </button>
           </li>
