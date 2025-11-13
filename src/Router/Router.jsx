@@ -6,6 +6,9 @@ import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
 import PrivateRoute from "../Component/PrivetRouter/PrivetRouter";
 import ArtDetails from "../Component/ArtDetails/ArtDetails";
+import AllArt from "../Component/AllArt/AllArt";
+import AddArt from "../Component/AddArt/AddArt";
+import MyGallery from "../Component/MyGallery/MyGallery";
 
 const router = createBrowserRouter([
   {
@@ -25,8 +28,20 @@ const router = createBrowserRouter([
           Component: Register
         },
         {
-          path: '/artDetails',
+          path: '/artDetails/:id',
           element: <PrivateRoute><ArtDetails></ArtDetails></PrivateRoute>
+        },
+        {
+          path: '/artwork',
+          Component: AllArt
+        },
+        {
+          path: '/addArt',
+          element: <PrivateRoute><AddArt></AddArt></PrivateRoute>
+        },
+        {
+          path : '/gallery',
+          element: <PrivateRoute><MyGallery></MyGallery></PrivateRoute>
         }
     ],
   },

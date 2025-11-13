@@ -6,10 +6,10 @@ import Swal from "sweetalert2";
 const Register = () => {
   const { signInWithGoogle, setUser, singUpWithPassword } = use(AuthContext);
   const navigate = useNavigate();
-  
+
   const handleRegisterWithPassword = async (e) => {
     e.preventDefault();
-        const form = e.target;
+    const form = e.target;
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -33,8 +33,7 @@ const Register = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      form.reset();
-      navigate("/");
+
       fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
@@ -46,6 +45,8 @@ const Register = () => {
         .then((data) => {
           console.log("after save data :", data);
         });
+      form.reset();
+      navigate("/");
     } catch (error) {
       console.error("Firebase Error:", error.message);
       Swal.fire({
@@ -53,7 +54,7 @@ const Register = () => {
         title: "Register Failed",
         text: error.message,
       });
-      setUser(null)
+      setUser(null);
     }
   };
 

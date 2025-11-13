@@ -38,7 +38,7 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink className="btn btn-accent btn-outline" to="/addArtwork">
+        <NavLink className="btn btn-accent btn-outline" to="/addArt">
           Add Artwork
         </NavLink>
       </li>
