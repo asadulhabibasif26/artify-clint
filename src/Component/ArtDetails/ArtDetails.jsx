@@ -19,6 +19,10 @@ const ArtDetails = () => {
 
   const date = date_added?.split("T")[0];
 
+  const handelFavoriteAdd = () => {
+
+  }
+
   return (
     <div className="md:flex items-center bg-base-100 shadow-sm w-10/12 mx-auto justify-center">
       <figure className="">
@@ -69,7 +73,7 @@ const ArtDetails = () => {
               <BiSolidLike />
               {likes}
             </button>
-            <button className="btn py-4 btn-primary text-4xl">
+            <button onClick={()=>handelFavoriteAdd(id)} className="btn py-4 btn-primary text-4xl">
               <FcLike />
             </button>
           </div>

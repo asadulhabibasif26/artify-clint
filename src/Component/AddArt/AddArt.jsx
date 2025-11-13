@@ -33,6 +33,7 @@ const AddArt = () => {
         medium: medium,
         description: description,
         date_added: time,
+        likes: 0
       };
 
       Swal.fire({
