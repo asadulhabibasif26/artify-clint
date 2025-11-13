@@ -15,6 +15,7 @@ const MyGallery = () => {
         }, [email]);
   return (
     <div>
+      <h1 className="text-center text-accent text-4xl py-4 font-bold">My All Art </h1>
       <div className="w-10/12 mx-auto">
         {
             arts.map((art , index) => <MyGalleryCard key={art._id} index={index} art={art}></MyGalleryCard>)

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { BiSolidLike } from "react-icons/bi";
 import { FcLike } from "react-icons/fc";
 import { useParams } from "react-router";
+import { AuthContext } from "../../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const ArtDetails = () => {
   const [artDetail, setArtDetail] = useState([]);
   const { id } = useParams();
+  const {user} = use(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:3000/artDetails/${id}`)
@@ -14,14 +17,59 @@ const ArtDetails = () => {
       .catch((error) => console.error("Error fetching topArt:", error));
   }, [id]);
 
-  const { image, title, category, medium, likes, artist_email, artist_name ,date_added} =
-    artDetail;
+  const {
+    image,
+    title,
+    category,
+    medium,
+    likes,
+    artist_email,
+    artist_name,
+    date_added,
+    _id
+  } = artDetail;
 
   const date = date_added?.split("T")[0];
 
   const handelFavoriteAdd = () => {
+    const favoriteData = {
+      userEmail: user.email,
+      artId: _id,
+      title: title,
+      image: image,
+    };
 
-  }
+    fetch("http://localhost:3000/favorites", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(favoriteData),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Added to Favorites!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "info",
+          title: err.message || "Already in Favorites!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div className="md:flex items-center bg-base-100 shadow-sm w-10/12 mx-auto justify-center">
@@ -73,7 +121,10 @@ const ArtDetails = () => {
               <BiSolidLike />
               {likes}
             </button>
-            <button onClick={()=>handelFavoriteAdd(id)} className="btn py-4 btn-primary text-4xl">
+            <button
+              onClick={() => handelFavoriteAdd(id)}
+              className="btn py-4 btn-primary text-4xl"
+            >
               <FcLike />
             </button>
           </div>
